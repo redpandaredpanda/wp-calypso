@@ -1,9 +1,10 @@
-//const debug = require( 'debug' )( 'calypso:reader:following:edit' );
+const debug = require( 'debug' )( 'calypso:reader:following:edit' ); // eslint-disable-line
 
 // External dependencies
 const React = require( 'react' ),
 	url = require( 'url' ),
-	noop = require( 'lodash/utility/noop' );
+	noop = require( 'lodash/utility/noop' ),
+	parseDomain = require( 'parse-domain' );
 
 // Internal dependencies
 const Search = require( 'components/search' ),
@@ -56,7 +57,7 @@ var FollowingEditSubscribeForm = React.createClass( {
 
 	handleKeyDown: function( event ) {
 		// Use Enter to submit
-		if ( event.keyCode === 13 && this.state.searchString.length > minSearchLength  && this.state.isWellFormedFeedUrl ) {
+		if ( event.keyCode === 13 && this.state.searchString.length > minSearchLength && this.state.isWellFormedFeedUrl ) {
 			event.preventDefault();
 			this.handleFollowToggle();
 		}
@@ -98,11 +99,16 @@ var FollowingEditSubscribeForm = React.createClass( {
 	},
 
 	isWellFormedFeedUrl: function( parsedUrl ) {
-		if ( parsedUrl.hostname && parsedUrl.hostname.indexOf( '.' ) !== -1 ) {
-			return true;
+		if ( ! parsedUrl.hostname ) {
+			return false;
 		}
 
-		return false;
+		// Parse the domain to check for a valid TLD
+		if ( ! parseDomain( parsedUrl.hostname ) ) {
+			return false;
+		}
+
+		return true;
 	},
 
 	render: function() {

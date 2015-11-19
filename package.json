@@ -61,6 +61,7 @@
     "morgan": "1.2.0",
     "node-sass": "3.3.3",
     "page": "1.6.1",
+    "parse-domain": "0.2.0",
     "phone": "git+https://github.com/Automattic/node-phone.git#1.0.4-6",
     "photon": "1.0.4",
     "q": "1.0.1",
