@@ -29,7 +29,14 @@ module.exports = React.createClass( {
 	propTypes: {
 		site: React.PropTypes.object,
 		post: React.PropTypes.object,
-		connections: React.PropTypes.array
+		connections: React.PropTypes.array,
+		fetchConnections: React.PropTypes.func
+	},
+
+	getDefaultProps() {
+		return {
+			fetchConnections: () => {}
+		};
 	},
 
 	hasConnections: function() {
@@ -60,11 +67,7 @@ module.exports = React.createClass( {
 		}
 
 		this.connectionPopupMonitor.open( href );
-		this.connectionPopupMonitor.once( 'close', this.onNewConnectionPopupClosed );
-	},
-
-	onNewConnectionPopupClosed: function() {
-		connections.get( this.props.site.ID, { force: true } );
+		this.connectionPopupMonitor.once( 'close', this.props.fetchConnections );
 	},
 
 	newConnection: function() {
