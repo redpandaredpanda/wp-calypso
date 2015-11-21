@@ -47,11 +47,6 @@ export default React.createClass( {
 		);
 	},
 
-	getInviteRole() {
-		let meta = this.props.invite && this.props.invite.meta ? this.props.invite.meta : false;
-		return meta && meta.role ? meta.role : false;
-	},
-
 	getFormHeader() {
 		return (
 			<InviteFormHeader { ...this.props } />
