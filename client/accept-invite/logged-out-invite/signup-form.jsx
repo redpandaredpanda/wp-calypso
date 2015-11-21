@@ -42,7 +42,7 @@ export default React.createClass( {
 				acceptInvite(
 					this.props.invite,
 					bearerToken,
-					( error, response ) => this.setState( { error, userData, bearerToken } )
+					( acceptInviteError ) => this.setState( { acceptInviteError, userData, bearerToken } )
 				)
 		);
 	},
@@ -88,7 +88,7 @@ export default React.createClass( {
 				return redirectTo;
 				break;
 			default:
-				return redirectTo + '/posts/' + invite.blog_id ;
+				return redirectTo + '/posts/' + invite.blog_id;
 		}
 	},
 
