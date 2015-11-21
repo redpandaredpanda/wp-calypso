@@ -37,10 +37,9 @@ analytics.ga.recordEvent( gaEventCategory, 'InfoPopover: ' + popoverName + 'Open
 
 #### `ignoreContext`
 
-The `ignoreContext` lets you specify an Component that you want the when click on to be ignored. 
-In most cases this is not needed but if you want to also have a label that can trigger the toggle 
-the opening and closing of the InfoPopover then passing in the label as a reference works.
-
+The `ignoreContext` lets you specify an component that you want the when click on to be ignored. 
+In most cases this is not needed but if you want to also have a label that can trigger
+the opening and closing of the InfoPopover then you need to pass in the label component as a reference.
 
 ### Basic `InfoPopover` Usage
 
