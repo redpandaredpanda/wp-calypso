@@ -32,9 +32,16 @@ describe( '#fetchConnections()', () => {
 		nock( 'https://public-api.wordpress.com:443' )
 			.persist()
 			.get( '/rest/v1.1/sites/2916284/publicize-connections' )
-			.reply( 200, { connections: [ { ID: 2, site_ID: 2916284 } ] } )
+			.reply( 200, {
+				connections: [
+					{ ID: 2, site_ID: 2916284 }
+				]
+			} )
 			.get( '/rest/v1.1/sites/77203074/publicize-connections' )
-			.reply( 500 );
+			.reply( 403, {
+				error: 'authorization_required',
+				message: 'An active access token must be used to access publicize connections.'
+			} );
 	} );
 
 	beforeEach( () => {
@@ -74,7 +81,7 @@ describe( '#fetchConnections()', () => {
 			const action = spy.getCall( 1 ).args[ 0 ];
 			expect( action.type ).to.equal( FAIL_PUBLICIZE_CONNECTIONS_REQUEST );
 			expect( action.siteId ).to.equal( 77203074 );
-			expect( action.error.message ).to.equal( 'Internal Server Error' );
+			expect( action.error.message ).to.equal( 'Forbidden' );
 
 			done();
 		} ).catch( done );
