@@ -3,7 +3,6 @@
  */
 import { combineReducers } from 'redux';
 import indexBy from 'lodash/collection/indexBy';
-import includes from 'lodash/collection/includes';
 
 /**
  * Internal dependencies
@@ -17,7 +16,7 @@ import {
 /**
  * Track the current status for fetching connections. Maps site ID to the
  * fetching status for that site. Assigns `true` for currently fetching,
- * `false` for done or failed fetchingn, or `undefined` if no fetch attempt
+ * `false` for done or failed fetching, or `undefined` if no fetch attempt
  * has been made for the site.
  *
  * @param  {Object} state  Current state
