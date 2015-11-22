@@ -32,7 +32,7 @@ class EditorSharingContainer extends Component {
 	}
 
 	componentWillUnmount() {
-		PostEditStore.on( 'change', this.boundUpdateState );
+		PostEditStore.off( 'change', this.boundUpdateState );
 	}
 
 	updateState() {
