@@ -165,22 +165,25 @@ module.exports = {
 	 * @param {int}    siteId      An optional site ID
 	 */
 	getConnections: function( serviceName, siteId ) {
-		var connections;
+		var currentUser = user.get(),
+			connections;
 
-		// Find site ID if one is selected but not provided
-		if ( ! siteId && sites.selected ) {
-			siteId = sites.getSelectedSite().ID;
+		if ( currentUser ) {
+			// Find site ID if one is selected but not provided
+			if ( ! siteId && sites.selected ) {
+				siteId = sites.getSelectedSite().ID;
+			}
+
+			// Reset site ID if this is not a Publicize connection
+			if ( ! this.isServiceForPublicize( serviceName ) ) {
+				siteId = null;
+			}
+
+			connections = connectionsList.get( siteId );
+			connections = this.getConnectionsAvailableToCurrentUser( serviceName, connections );
+		} else {
+			connections = [];
 		}
-
-		// Reset site ID if this is not a Publicize connection
-		if ( ! this.isServiceForPublicize( serviceName ) ) {
-			siteId = null;
-		}
-
-		connections = this.getConnectionsAvailableToCurrentUser(
-			serviceName,
-			connectionsList.get( siteId )
-		);
 
 		return this.filter( 'getConnections', serviceName, connections, arguments );
 	},
