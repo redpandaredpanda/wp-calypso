@@ -42,6 +42,12 @@ The `position` property can be one of the following values:
 - `left`
 - `right`
 
+#### `ignoreContext`
+
+The `ignoreContext` lets you specify an component that you want the when click on to be ignored. 
+In most cases this is not needed but if you want to also have a label that can trigger
+the opening and closing of the Popover then you need to pass in the label component as a reference.
+
 ### `Popover` Usage
 
 ```js
