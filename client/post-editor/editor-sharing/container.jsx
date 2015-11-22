@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
  */
 import PostEditStore from 'lib/posts/post-edit-store';
 import { fetchConnections } from 'lib/sharing/publicize/actions';
-import { getConnectionsBySiteId, hasFetchedConnections, isFetchingConnections } from 'lib/sharing/publicize/selectors';
+import { getConnectionsBySiteId, hasFetchedConnections } from 'lib/sharing/publicize/selectors';
 import EditorSharingAccordion from './accordion';
 
 class EditorSharingContainer extends Component {
@@ -19,8 +19,7 @@ class EditorSharingContainer extends Component {
 		super( props );
 
 		// Trigger connection fetch
-		if ( ! hasFetchedConnections( state, site.ID ) &&
-				! isFetchingConnections( state, site.ID ) ) {
+		if ( ! hasFetchedConnections( state, site.ID ) ) {
 			this.fetchConnections();
 		}
 
