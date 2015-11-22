@@ -12,10 +12,6 @@ import {
 	isFetchingConnections
 } from '../selectors';
 
-function getState( connections ) {
-	return ;
-}
-
 describe( '#getConnectionsBySiteId()', () => {
 	it( 'should return an empty array for a site which has not yet been fetched', () => {
 		const connections = getConnectionsBySiteId( {
