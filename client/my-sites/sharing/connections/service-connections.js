@@ -136,6 +136,28 @@ module.exports = {
 	},
 
 	/**
+	 * Given a service name and array of connection objects, returns the subset
+	 * of connections that are available for use by the current user.
+	 *
+	 * @param  {string} serviceName The name of the service
+	 * @param  {int}    siteId      An optional site ID
+	 * @return {Array}              Connections available to user
+	 */
+	getConnectionsAvailableToCurrentUser: function( serviceName, connections ) {
+		var currentUser = user.get();
+
+		if ( ! currentUser ) {
+			return [];
+		}
+
+		return connections.filter( function( connection ) {
+			// Only include connections of the specified service, filtered by
+			// those owned by the current user or shared.
+			return connection.service === serviceName && ( connection.keyring_connection_user_ID === currentUser.ID || connection.shared );
+		} );
+	},
+
+	/**
 	 * Given a service name and optional site ID, returns the available
 	 * connections for the current user.
 	 *
@@ -143,28 +165,22 @@ module.exports = {
 	 * @param {int}    siteId      An optional site ID
 	 */
 	getConnections: function( serviceName, siteId ) {
-		var currentUser = user.get(),
-			connections;
+		var connections;
 
-		if ( currentUser ) {
-			// Find site ID if one is selected but not provided
-			if ( ! siteId && sites.selected ) {
-				siteId = sites.getSelectedSite().ID;
-			}
-
-			// Reset site ID if this is not a Publicize connection
-			if ( ! this.isServiceForPublicize( serviceName ) ) {
-				siteId = null;
-			}
-
-			connections = connectionsList.get( siteId ).filter( function( connection ) {
-				// Only include connections of the specified service, filtered by
-				// those owned by the current user or shared.
-				return connection.service === serviceName && ( connection.keyring_connection_user_ID === currentUser.ID || connection.shared );
-			} );
-		} else {
-			connections = [];
+		// Find site ID if one is selected but not provided
+		if ( ! siteId && sites.selected ) {
+			siteId = sites.getSelectedSite().ID;
 		}
+
+		// Reset site ID if this is not a Publicize connection
+		if ( ! this.isServiceForPublicize( serviceName ) ) {
+			siteId = null;
+		}
+
+		connections = this.getConnectionsAvailableToCurrentUser(
+			serviceName,
+			connectionsList.get( siteId )
+		);
 
 		return this.filter( 'getConnections', serviceName, connections, arguments );
 	},
