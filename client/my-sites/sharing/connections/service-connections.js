@@ -140,7 +140,7 @@ module.exports = {
 	 * of connections that are available for use by the current user.
 	 *
 	 * @param  {string} serviceName The name of the service
-	 * @param  {int}    siteId      An optional site ID
+	 * @param  {Array}  siteId      Connection objects
 	 * @return {Array}              Connections available to user
 	 */
 	getConnectionsAvailableToCurrentUser: function( serviceName, connections ) {
