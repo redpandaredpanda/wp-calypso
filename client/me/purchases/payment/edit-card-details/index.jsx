@@ -2,6 +2,7 @@
  * External Dependencies
  */
 import React from 'react';
+import extend from 'lodash/object/assign';
 import page from 'page';
 
 /**
@@ -30,6 +31,7 @@ const wpcom = wpcomFactory.undocumented();
 
 const EditCardDetails = React.createClass( {
 	propTypes: {
+		card: React.PropTypes.object.isRequired,
 		countriesList: React.PropTypes.object.isRequired,
 		selectedPurchase: React.PropTypes.object.isRequired,
 		selectedSite: React.PropTypes.object.isRequired
@@ -54,12 +56,36 @@ const EditCardDetails = React.createClass( {
 		'postalCode'
 	],
 
+	componentWillReceiveProps( nextProps ) {
+		// Updates the form once with the stored credit card data as soon as they are available
+		if ( nextProps.card && (! this.props.card || ( nextProps.card.id !== this.props.card.id ) ) ) {
+			this.setState( {
+				form: formState.initializeFields( this.state.form, this.mergeCard( nextProps.card ) )
+			} );
+		}
+	},
+
+	mergeCard( card, fields:{} ) {
+		return extend( {}, fields, {
+			name: card.name
+		} );
+	},
+
 	componentWillMount() {
-		this.formStateController = formState.Controller( {
-			fieldNames: this.fieldNames,
+		const options = {
 			validatorFunction: this.validate,
 			onNewState: this.setFormState
-		} );
+		};
+
+		if ( this.props.card ) {
+			const fields = formState.createNullFieldValues( this.fieldNames );
+
+			options.initialState = formState.createInitialFormState( this.mergeCard( this.props.card, fields ) );
+		} else {
+			options.fieldNames = this.fieldNames;
+		}
+
+		this.formStateController = formState.Controller( options );
 
 		this.setState( { form: this.formStateController.getInitialState() } );
 	},
@@ -76,7 +102,7 @@ const EditCardDetails = React.createClass( {
 		const messages = formState.getErrorMessages( form );
 
 		if ( messages.length > 0 ) {
-			const notice = notices.error( <ValidationErrorList messages={ messages }/> );
+			const notice = notices.error( <ValidationErrorList messages={ messages } /> );
 
 			this.setState( {
 				form,
