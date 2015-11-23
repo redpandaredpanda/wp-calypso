@@ -19,6 +19,12 @@ const EditPaymentMethod = React.createClass( {
 		selectedSite: React.PropTypes.object.isRequired
 	},
 
+	getDefaultProps() {
+		return {
+			trackingSlug: 'edit_payment_method'
+		};
+	},
+
 	mixins: [ purchasesMixin ],
 
 	render() {

@@ -22,6 +22,12 @@ const ConfirmCancelPurchase = React.createClass( {
 		selectedSite: React.PropTypes.object
 	},
 
+	getDefaultProps() {
+		return {
+			trackingSlug: 'confirm_cancel'
+		};
+	},
+
 	mixins: [ purchasesMixin ],
 
 	componentDidMount() {

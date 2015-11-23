@@ -13,6 +13,7 @@ import Card from 'components/card';
 import Main from 'components/main';
 import HeaderCake from 'components/header-cake';
 import paths from '../paths';
+import purchasesMixin from '../purchases-mixin';
 import { isRefundable } from 'lib/purchases';
 import { cancelPrivateRegistration } from 'lib/upgrades/actions';
 import SimpleNotice from 'notices/simple-notice';
@@ -24,11 +25,13 @@ const CancelPrivateRegistration = React.createClass( {
 		};
 	},
 
-	goToManagePurchase() {
-		const { domain, id } = this.props.selectedPurchase.data;
-
-		page( paths.managePurchase( domain, id ) );
+	getDefaultProps() {
+		return {
+			trackingSlug: 'cancel_private_registration'
+		};
 	},
+
+	mixins: [ purchasesMixin ],
 
 	cancel() {
 		const { domain, id } = this.props.selectedPurchase.data;
@@ -42,10 +45,6 @@ const CancelPrivateRegistration = React.createClass( {
 				page( paths.managePurchaseDestination( domain, id, 'canceled-private-registration' ) );
 			}
 		} );
-	},
-
-	isDataLoading() {
-		return ( ! this.props.selectedSite || ! this.props.selectedPurchase.hasLoadedFromServer );
 	},
 
 	renderDescriptionText() {

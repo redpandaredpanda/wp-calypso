@@ -54,6 +54,12 @@ const ManagePurchase = React.createClass( {
 		destinationType: React.PropTypes.string
 	},
 
+	getDefaultProps() {
+		return {
+			trackingSlug: 'manage'
+		};
+	},
+
 	mixins: [ purchasesMixin ],
 
 	isDataFetchingAfterRenewal() {

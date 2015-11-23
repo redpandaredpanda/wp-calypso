@@ -25,6 +25,12 @@ const CancelPurchase = React.createClass( {
 		selectedSite: React.PropTypes.object
 	},
 
+	getDefaultProps() {
+		return {
+			trackingSlug: 'cancel'
+		};
+	},
+
 	mixins: [ purchasesMixin ],
 
 	componentDidMount() {

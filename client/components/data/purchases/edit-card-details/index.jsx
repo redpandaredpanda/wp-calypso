@@ -35,6 +35,12 @@ const EditCardDetailsData = React.createClass( {
 		sites: React.PropTypes.object.isRequired
 	},
 
+	getDefaultProps() {
+		return {
+			trackingSlug: 'edit_card_details'
+		};
+	},
+
 	mixins: [ observe( 'sites' ) ],
 
 	componentWillMount() {
