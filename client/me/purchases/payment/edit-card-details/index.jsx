@@ -120,7 +120,7 @@ const EditCardDetails = React.createClass( {
 		const cardDetails = this.getCardDetails();
 
 		analytics.tracks.recordEvent(
-			'calypso_purchases_submit_cancel_form',
+			'calypso_purchases_submit_credit_card_form',
 			{ product_type: this.props.selectedPurchase.data.productSlug }
 		);
 
