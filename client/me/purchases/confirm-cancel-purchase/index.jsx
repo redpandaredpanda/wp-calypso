@@ -7,7 +7,7 @@ import React from 'react';
 
 /**
  * Internal Dependencies
- **/
+ */
 import Card from 'components/card';
 import loadEndpointForm from './load-endpoint-form';
 import HeaderCake from 'components/header-cake';
