@@ -47,7 +47,6 @@ const EditCardDetails = React.createClass( {
 	},
 
 	fieldNames: [
-		'id',
 		'name',
 		'number',
 		'cvv',
