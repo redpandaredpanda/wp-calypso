@@ -37,7 +37,7 @@ module.exports = React.createClass( {
 	hasWarning: function() {
 		var site = this.props.site;
 
-		if ( site.jetpack && ! site.hasMinimumJetpackVersion ) {
+		if ( site.jetpack ) {
 			if ( site.callingHome ) {
 				return false;
 			} else if ( typeof site.unreachable === 'undefined' ) {
@@ -236,13 +236,13 @@ module.exports = React.createClass( {
 		return (
 			<div className={ indicatorClass }>
 				<button className="site-indicator__button" onClick={ this.toggleExpand } />
-				{ this.state.expand ?
-					<div className="site-indicator__message">
+				{ this.state.expand
+					? <div className="site-indicator__message">
 						<div className={ textClass }>
 							{ this.getText() }
 						</div>
 					</div>
-				: null }
+					: null }
 			</div>
 		);
 	}
